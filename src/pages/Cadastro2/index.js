@@ -1,5 +1,5 @@
-// TELA CADASTRO 1
-import React from "react";
+// TELA CADASTRO 2
+import React, {useContext} from "react";
 import {Platform} from "react-native";
 
 // IMPORTAÇÃO DOS ESTILOS DA TELA DE LOGIN
@@ -11,13 +11,24 @@ import {Background,
     SubmitButton, 
     SubmitText, } from './styles';
 
-    // NAVEGAÇÃO PARA TELA DE CADASTRO 2
+// NAVEGAÇÃO PARA TELA ...
 import { useNavigation } from "@react-navigation/native";
+
+//IMPORTAÇÃO DO CONTEXTO PARA ACESSAR AS INFORMAÇÕES
+import { AuthContext } from '../../contexts/auth';
 
 export default function Cadastro2(){
 
     // INSTANCIA PARA NAVEGAR ENTRE TELAS
     const navigation = useNavigation();
+
+    //PERMISSAO DO USO DO CONTEXTO ATRAVES DO NOME PASSADO
+    const {user} = useContext(AuthContext)
+
+    //FUNÇÃO QUE VERIFICA OS DADOS DO CONTEXTO CRIADO CONFORME AS INFORMAÇÕES DIGITADAS PELO USUARIO 
+    function handleSignUp(){
+        console.log(user.nome);
+    }
 
     return(
         <Background>   
@@ -59,7 +70,7 @@ export default function Cadastro2(){
 
              {/* PROPRIEDADE ONPRESS LEVA PARA A PAGINA CONFORME PASSADO ENTRE '' */}
             <SubmitButton activeOpacity={0.5}
-            onPress={() => navigation.navigate('')}>
+            onPress={handleSignUp}>
                     <SubmitText>Próximo</SubmitText>
             </SubmitButton>              
 

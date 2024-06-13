@@ -1,5 +1,5 @@
 // TELA CADASTRO 1
-import React from "react";
+import React, { useContext} from "react";
 import {Platform} from "react-native";
 
 // IMPORTAÇÃO DOS ESTILOS DA TELA DE LOGIN
@@ -11,13 +11,15 @@ import {Background,
     SubmitButton, 
     SubmitText, } from './styles';
 
-    // NAVEGAÇÃO PARA TELA DE CADASTRO 2
+// NAVEGAÇÃO PARA TELA DE CADASTRO 2
 import { useNavigation } from "@react-navigation/native";
+
+
 
 export default function SignUp(){
 
     // INSTANCIA PARA NAVEGAR ENTRE TELAS
-    const navigation = useNavigation();
+    const navigation = useNavigation();    
 
     return(
         <Background>   
