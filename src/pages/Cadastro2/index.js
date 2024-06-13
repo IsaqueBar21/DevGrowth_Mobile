@@ -14,7 +14,7 @@ import {Background,
     // NAVEGAÇÃO PARA TELA DE CADASTRO 2
 import { useNavigation } from "@react-navigation/native";
 
-export default function SignUp(){
+export default function Cadastro2(){
 
     // INSTANCIA PARA NAVEGAR ENTRE TELAS
     const navigation = useNavigation();
@@ -38,24 +38,29 @@ export default function SignUp(){
             {/* CAMPOS DE CADASTRO */}
             <AreaInput>
                 <Input
-                    placeholder="Email"
+                    placeholder="Nome"
                 />   
             </AreaInput>
             <AreaInput>
                     <Input
-                        placeholder="Senha"
+                        placeholder="Sobrenome"
                     />                       
             </AreaInput>
             <AreaInput>
                     <Input
-                        placeholder="Confirmar Senha"
+                        placeholder="Data de Nascimento"
                     />                       
             </AreaInput>   
+            <AreaInput>
+                    <Input
+                        placeholder="CPF"
+                    />                       
+            </AreaInput>
 
              {/* PROPRIEDADE ONPRESS LEVA PARA A PAGINA CONFORME PASSADO ENTRE '' */}
             <SubmitButton activeOpacity={0.5}
-            onPress={() => navigation.navigate('Cadastro2')}>
-                    <SubmitText>Cadastrar</SubmitText>
+            onPress={() => navigation.navigate('')}>
+                    <SubmitText>Próximo</SubmitText>
             </SubmitButton>              
 
               

@@ -15,7 +15,7 @@ import {Background,
         LinkText
         } from "./styles";
 
-// NAVEGAÇÃO PARA TELA DE CADASTRO
+// NAVEGAÇÃO PARA TELA DE CADASTRO 1
 import { useNavigation } from "@react-navigation/native";
 
 export default function SignIn(){
