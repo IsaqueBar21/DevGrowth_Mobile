@@ -35,7 +35,15 @@ export const Input = styled.TextInput`
     font-size: 18px;
     padding: 10px;
     border-radius: 10px;
-    margin-bottom: 35px;   
+    margin-bottom: 35px;    
+`;
+
+export const IconContainer = styled.TouchableOpacity`
+    position: absolute;
+    right: 10px;
+    top: 15px;
+    z-index: 1;
+    
 `;
 
 // BOTAO DE CADASTRAR
@@ -54,4 +62,3 @@ export const SubmitText = styled.Text`
     color: #AFD5AA;    
     font-weight: bold;
 `;
-

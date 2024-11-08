@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { Platform, Alert } from "react-native";
-import { Background, Container, AreaInput, Input, Logo, SubmitButton, SubmitText } from './styles';
+import { Ionicons } from '@expo/vector-icons';
+import { Background, Container, AreaInput, Input, Logo, SubmitButton, SubmitText, IconContainer } from './styles';
 import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from '@react-native-async-storage/async-storage'; // Importando AsyncStorage
 
 // Firebase
 import { getAuth, fetchSignInMethodsForEmail, createUserWithEmailAndPassword } from "firebase/auth";
@@ -15,7 +17,7 @@ let auth;
 try {
   app = initializeApp(firebaseConfig);
   auth = getAuth(app);
-  console.log("Firebase está inicializado:", app.name); // Confirmando a inicialização
+  console.log("Firebase está inicializado:", app.name);
 } catch (error) {
   console.error("Erro ao inicializar o Firebase:", error);
   Alert.alert('Erro', 'Não foi possível conectar ao Firebase.');
@@ -26,6 +28,8 @@ export default function SignUp() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   // Função para validar email
   const validateEmail = (email) => {
@@ -37,10 +41,21 @@ export default function SignUp() {
   const checkIfEmailExists = async (email) => {
     try {
       const methods = await fetchSignInMethodsForEmail(auth, email);
-      return methods.length > 0; // Se retornar mais de 0, o email já está registrado
+      return methods.length > 0;
     } catch (error) {
       console.error('Erro ao verificar email:', error);
       return false;
+    }
+  };
+
+  // Função para salvar dados localmente
+  const saveUserDataLocally = async (email, password) => {
+    try {
+      await AsyncStorage.setItem('userEmail', email);
+      await AsyncStorage.setItem('userPassword', password);
+      console.log('Dados salvos localmente!');
+    } catch (error) {
+      console.error('Erro ao salvar os dados localmente:', error);
     }
   };
 
@@ -87,6 +102,11 @@ export default function SignUp() {
       } else {
         Alert.alert('Erro', errorMessage);
       }
+
+      // Caso o Firebase falhe, salvar localmente e navegar para a próxima página
+      await saveUserDataLocally(email, password);  // Salvar dados localmente
+      Alert.alert('Sucesso', 'Cadastro falhou no Firebase, mas dados salvos localmente!');
+      navigation.navigate('Cadastro2'); // Navegar para a próxima tela
     }
   };
 
@@ -111,19 +131,25 @@ export default function SignUp() {
         <AreaInput>
           <Input
             placeholder="Senha"
-            secureTextEntry
+            secureTextEntry={!showPassword}
             value={password}
             onChangeText={setPassword}
           />
+          <IconContainer onPress={() => setShowPassword(!showPassword)}>
+            <Ionicons name={showPassword ? "eye" : "eye-off"} size={24} color="#383838" />
+          </IconContainer>
         </AreaInput>
 
         <AreaInput>
           <Input
             placeholder="Confirmar Senha"
-            secureTextEntry
+            secureTextEntry={!showConfirmPassword}
             value={confirmPassword}
             onChangeText={setConfirmPassword}
           />
+          <IconContainer onPress={() => setShowConfirmPassword(!showConfirmPassword)}>
+            <Ionicons name={showConfirmPassword ? "eye" : "eye-off"} size={24} color="#383838" />
+          </IconContainer>
         </AreaInput>
 
         <SubmitButton

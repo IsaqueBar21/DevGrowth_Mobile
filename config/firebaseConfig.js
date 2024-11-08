@@ -1,6 +1,5 @@
 // Importa as funções necessárias do SDK do Firebase
 import { initializeApp } from "firebase/app";
-// Caso queira usar a autenticação, Firestore, etc., importe os módulos necessários aqui
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore"; // Se for usar Firestore
 import { getDatabase } from "firebase/database"; // Se for usar Realtime Database
@@ -15,12 +14,19 @@ const firebaseConfig = {
   appId: "1:1080588946569:web:27e3ed74fc9505618c4a58"
 };
 
-// Inicializa o Firebase
-const app = initializeApp(firebaseConfig);
+// Tente inicializar o Firebase
+let app;
+try {
+  app = initializeApp(firebaseConfig);
+  console.log("Firebase inicializado com sucesso!");
+} catch (error) {
+  console.error("Erro ao inicializar o Firebase:", error);
+}
 
-// Inicializa os serviços do Firebase que você deseja usar
-const auth = getAuth(app);  // Para autenticação
-const firestore = getFirestore(app); // Para Firestore (se você for usar)
-const database = getDatabase(app); // Para Realtime Database (se você for usar)
+// Inicialize os serviços
+const auth = app ? getAuth(app) : null;  // Para autenticação
+const firestore = app ? getFirestore(app) : null; // Para Firestore
+const database = app ? getDatabase(app) : null; // Para Realtime Database
 
+// Exporte os serviços
 export { auth, firestore, database };
